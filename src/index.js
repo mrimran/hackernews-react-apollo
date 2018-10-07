@@ -11,6 +11,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context';
 import {AUTH_TOKEN} from './components/constants'
 
+import {BrowserRouter} from 'react-router-dom'
+
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000'
 })
@@ -22,7 +24,7 @@ const authLink = setContext((_, {headers}) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : 
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjam11eWk2MWM0YXljMGIyODY2NHkxOW9jIiwiaWF0IjoxNTM4NjgwMjY5fQ.Ask3Uf-J6nYK-yUcV5B7Yzo9hh3YY3a1NLthfaLMY9I'
+      ''
     }
   }
 })
@@ -33,9 +35,11 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById('root')
 )
 
